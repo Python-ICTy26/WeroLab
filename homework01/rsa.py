@@ -14,18 +14,17 @@ def is_prime(n: int) -> bool:
     >>> is_prime(8)
     False
     """
-    if(n == 1):
+    if n == 1:
         return False
-    if(n!=2):
-        y = math.ceil(math.sqrt(n)+1)
-        for i in range(2,y):
-            if(n%int(i) == 0):
+    if n != 2:
+        y = math.ceil(math.sqrt(n) + 1)
+        for i in range(2, y):
+            if n % int(i) == 0:
                 return False
     else:
         return True
     # PUT YOUR CODE HERE
     return True
-
 
 
 def gcd(a: int, b: int) -> int:
@@ -42,7 +41,7 @@ def gcd(a: int, b: int) -> int:
             a = a % b
         else:
             b = b % a
-    return a+b
+    return a + b
 
 
 def multiplicative_inverse(e: int, phi: int) -> int:
@@ -53,7 +52,7 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     >>> multiplicative_inverse(7, 40)
     23
     """
-    return pow(e,-1,phi)
+    return pow(e, -1, phi)
     # PUT YOUR CODE HERE
 
 
@@ -63,10 +62,10 @@ def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[in
     elif p == q:
         raise ValueError("p and q cannot be equal")
 
-    n = p*q
+    n = p * q
     # PUT YOUR CODE HERE
 
-    phi = (p-1)*(q-1)
+    phi = (p - 1) * (q - 1)
     # PUT YOUR CODE HERE
 
     # Choose an integer e such that e and phi(n) are coprime
@@ -100,13 +99,12 @@ def decrypt(pk: tp.Tuple[int, int], ciphertext: tp.List[int]) -> str:
     # Unpack the key into its components
     key, n = pk
     # Generate the plaintext based on the ciphertext and key using a^b mod m
-    plain = [chr((char**key) % n) for char in ciphertext]
+    plain = [chr((char ** key) % n) for char in ciphertext]
     # Return the array of bytes as a string
     return "".join(plain)
 
 
 if __name__ == "__main__":
-
     print("RSA Encrypter/ Decrypter")
     p = int(input("Enter a prime number (17, 19, 23, etc): "))
     q = int(input("Enter another prime number (Not one you entered above): "))
@@ -120,5 +118,3 @@ if __name__ == "__main__":
     print("Decrypting message with public key ", public, " . . .")
     print("Your message is:")
     print(decrypt(public, encrypted_msg))
-    
-    #print(is_prime(3571))
