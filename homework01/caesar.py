@@ -1,39 +1,46 @@
 import typing as tp
-
+def func_enc(symbol: str, shift: int):
+    encrypted = ""
+    if symbol.isupper():
+        symbol_index = ord(symbol) - ord("A")
+        new_symbol = chr((symbol_index + shift) % 26 + ord("A"))
+        encrypted += new_symbol
+    elif symbol.islower():
+        symbol_index = ord(symbol) - ord("a")
+        new_symbol = chr((symbol_index + shift) % 26 + ord("a"))
+        encrypted += new_symbol
+    elif symbol.isdigit():
+        encrypted += str(symbol)
+    else:
+        encrypted += symbol
+    return encrypted
+def func_dec(symbol: str, shift: int):
+    encrypted = ""
+    if symbol.isupper():
+        symbol_index = ord(symbol) - ord("A")
+        new_symbol = chr((symbol_index - shift) % 26 + ord("A"))
+        encrypted += new_symbol
+    elif symbol.islower():
+        symbol_index = ord(symbol) - ord("a")
+        new_symbol = chr((symbol_index - shift) % 26 + ord("a"))
+        encrypted += new_symbol
+    elif symbol.isdigit():
+        encrypted += str(symbol)
+    else:
+        encrypted += symbol
+    return encrypted
 
 def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
-    """
-    Encrypts plaintext using a Caesar cipher.
-
-    >>> encrypt_caesar("PYTHON")
-    'SBWKRQ'
-    >>> encrypt_caesar("python")
-    'sbwkrq'
-    >>> encrypt_caesar("Python3.6")
-    'Sbwkrq3.6'
-    >>> encrypt_caesar("")
-    ''
-    """
-    ciphertext = ""
-    # PUT YOUR CODE HERE
-    return ciphertext
+    encrypted = ""
+    for symbol in plaintext:
+       encrypted+=func_enc(symbol,shift)
+    return encrypted
 
 
 def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
-    """
-    Decrypts a ciphertext using a Caesar cipher.
-
-    >>> decrypt_caesar("SBWKRQ")
-    'PYTHON'
-    >>> decrypt_caesar("sbwkrq")
-    'python'
-    >>> decrypt_caesar("Sbwkrq3.6")
-    'Python3.6'
-    >>> decrypt_caesar("")
-    ''
-    """
     plaintext = ""
-    # PUT YOUR CODE HERE
+    for symbol in ciphertext:
+        plaintext+=func_dec(symbol,shift)
     return plaintext
 
 
@@ -44,3 +51,4 @@ def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
     best_shift = 0
     # PUT YOUR CODE HERE
     return best_shift
+print(decrypt_caesar("SBWKRQ",3))
