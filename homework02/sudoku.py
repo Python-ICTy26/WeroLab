@@ -44,7 +44,7 @@ def group(values: tp.List[tp.TypeVar("T")], n: int) -> tp.List[tp.List[tp.TypeVa
     a = []
     b = []
     r = 0
-    for i in range(0,len(values)):
+    for i in range(0, len(values)):
         r += 1
         b.append(values[i])
         if r == n:
@@ -62,7 +62,7 @@ def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
 def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
     a = []
     for i in grid:
-        for j in range(0,len(grid)):
+        for j in range(0, len(grid)):
             if j == pos[1]:
                 a.append(i[j])
     return a
@@ -81,14 +81,14 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
 def find_empty_positions(grid: tp.List[tp.List[str]]) -> tuple[int, int]:
     for i in range(0, len(grid)):
         for j in range(0, len(grid[0])):
-            if grid[i][j] == '.':
+            if grid[i][j] == ".":
                 return (i, j)
     return "no"
 
 
 
 def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
-    q = {"1","2","3","4","5","6","7","8","9"}
+    q = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
     block = get_block(grid, pos)
     for i in range(0, len(block)):
         for j in range(0, len(block[1])):
@@ -129,23 +129,23 @@ def solver(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]):
         grid[int(position[0])][int(position[1])] = "."
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
-    solver(grid,(find_empty_positions(grid)[0], find_empty_positions(grid)[1]))
+    solver(grid, (find_empty_positions(grid)[0], find_empty_positions(grid)[1]))
     a = f
     return a
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     r = []
-    q = ["1","2","3","4","5","6","7","8","9"]
+    q = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     for i in range(0, len(solution)):
         for j in range(0, len(q)):
-            if solution[i].count(q[j]) > 1 :
+            if solution[i].count(q[j]) > 1:
                 return False
     for i in range(0, len(solution)):
         r.clear()
         for j in range(0, len(q)):
             r.append(solution[j][i])
         for t in range(0, len(q)):
-            if r.count(q[i]) > 1 :
+            if r.count(q[i]) > 1:
                 return False
     for i in range(0, len(solution)):
         for j in range(0, len(solution[0])):
