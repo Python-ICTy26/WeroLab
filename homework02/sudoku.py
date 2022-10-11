@@ -8,7 +8,6 @@ def read_sudoku(path: tp.Union[str, pathlib.Path]) -> tp.List[tp.List[str]]:
     with path.open() as f:
         puzzle = f.read()
     return create_grid(puzzle)
-#def gen(grid: tp.List[tp.List[str]]):
 f = []
 sudoku_for_gen = [
     ["5", "3", "4", "6", "7", "8", "9", "1", "2"],
@@ -46,9 +45,9 @@ def group(values: tp.List[tp.TypeVar("T")], n: int) -> tp.List[tp.List[tp.TypeVa
     b = []
     r = 0
     for i in range(0,len(values)):
-        r+=1
+        r += 1
         b.append(values[i])
-        if(r == n):
+        if r == n:
             a.append(b)
             b = []
             r = 0
@@ -64,125 +63,124 @@ def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     a = []
     for i in grid:
         for j in range(0,len(grid)):
-            if(j == pos[1]):
+            if j == pos[1]:
                 a.append(i[j])
     return a
 
 
 def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
-    a = int(pos[0])//3*3
-    b = int(pos[1])//3*3
+    a = int(pos[0]) // 3 * 3
+    b = int(pos[1]) // 3 * 3
     c = []
-    for i in range(a,a+3):
-        for j in range(b,b+3):
+    for i in range(a, a + 3):
+        for j in range(b, b + 3):
             c.append(grid[i][j])
     return c
 
 
 def find_empty_positions(grid: tp.List[tp.List[str]]) -> tuple[int, int]:
-    for i in range(0,len(grid)):
-        for j in range(0,len(grid[0])):
-            if(grid[i][j] == '.'):
+    for i in range(0, len(grid)):
+        for j in range(0, len(grid[0])):
+            if grid[i][j] == '.':
                 return (i, j)
     return "no"
 
 
 
 def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
-    q = {'1','2','3','4','5','6','7','8','9'}
-    block = get_block(grid,pos)
-    for i in range(0,len(block)):
-        for j in range(0,len(block[1])):
-            if(block[i][j] in q):
+    q = {"1","2","3","4","5","6","7","8","9"}
+    block = get_block(grid, pos)
+    for i in range(0, len(block)):
+        for j in range(0, len(block[1])):
+            if block[i][j] in q:
                 q.remove(block[i][j])
-    row = get_row(grid,pos)
-    for i in range(0,len(row)):
-        if(row[i] in q):
+    row = get_row(grid, pos)
+    for i in range(0, len(row)):
+        if row[i] in q:
             q.remove(row[i])
-    column = get_col(grid,pos)
-    for i in range(0,len(column)):
-        if(column[i] in q):
+    column = get_col(grid, pos)
+    for i in range(0, len(column)):
+        if column[i] in q:
             q.remove(column[i])
     return q
 def var(grid: tp.List[tp.List[str]]):
     f.clear()
-    for i in range(0,len(grid)):
+    for i in range(0, len(grid)):
         t = []
-        for j in range(0,len(grid[0])):
+        for j in range(0, len(grid[0])):
             t.append(grid[i][j])
         f.append(t)
-def solver(grid: tp.List[tp.List[str]],pos: tp.Tuple[int, int]):
+def solver(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]):
     global f
     position = find_empty_positions(grid)
-    if (position == "no"):
+    if position == "no":
         var(grid)
         return
     values = find_possible_values(grid, (int(position[0]), int(position[1])))
-    if (find_empty_positions(grid) == "no"):
+    if find_empty_positions(grid) == "no":
         return
 
-    if (len(values) == 0):
+    if len(values) == 0:
         grid[int(pos[0])][int(pos[1])] = "."
         return
     for value in values:
         grid[int(position[0])][int(position[1])] = str(value)
-        #display(grid)
         solver(grid, (position[0], position[1]))
         grid[int(position[0])][int(position[1])] = "."
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
-    solver(grid,(find_empty_positions(grid)[0],find_empty_positions(grid)[1]))
+    solver(grid,(find_empty_positions(grid)[0], find_empty_positions(grid)[1]))
     a = f
     return a
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     r = []
-    q = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
-    for i in range(0,len(solution)):
-        for j in range(0,len(q)):
-            if(solution[i].count(q[j])>1):
+    q = ["1","2","3","4","5","6","7","8","9"]
+    for i in range(0, len(solution)):
+        for j in range(0, len(q)):
+            if solution[i].count(q[j]) > 1 :
                 return False
-    for i in range(0,len(solution)):
+    for i in range(0, len(solution)):
         r.clear()
-        for j in range(0,len(q)):
+        for j in range(0, len(q)):
             r.append(solution[j][i])
-        for t in range(0,len(q)):
-            if(r.count(q[i])>1):
+        for t in range(0, len(q)):
+            if r.count(q[i]) > 1 :
                 return False
     for i in range(0, len(solution)):
         for j in range(0, len(solution[0])):
-            if(solution[i][j] == "."):
+            if solution[i][j] == ".":
                 return False
-    #block = get_block(grid,)
+    # block = get_block(grid,)
 
     return True
-#b b a b b c a c a
+# b b a b b c a c a
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     s = []
     r = []
     for i in range(9):
         r.clear()
         for j in range(9):
-            r.append('.')
+            r.append(".")
         s.append(r)
 
-    if (N == 0):
+    if N == 0:
         return s
     sol = solve(s)
-    if (N >= 81):
+    if N >= 81:
         return sol
     sol = sudoku_for_gen
-    N = 81-N
+    N = 81 - N
     for i in range(9):
         for j in range(9):
-            if(N>0):
+            if N > 0:
                 a = 0
                 b = 0
-                while(sol[a][b]=="."):
+                while sol[a][b] == ".":
                     a = random.randint(0, 8)
                     b = random.randint(0, 8)
                 sol[a][b] = "."
-                N-=1
+                N -= 1
     return sol
 
 
