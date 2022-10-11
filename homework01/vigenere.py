@@ -1,3 +1,4 @@
+from caesar import *
 def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     ciphertext = ""
     i = len(keyword)
@@ -5,18 +6,11 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
         if len(keyword) < i + 1:
             i = 0
         if symbol.isupper():
-            symbol_index = ord(symbol) - ord("A")
-            new_symbol = chr((symbol_index + (ord(keyword[i]) - ord("A"))) % 26 + ord("A"))
-            ciphertext += new_symbol
+            ciphertext += func_enc(symbol, ord(keyword[i]) - ord("A"))
         elif symbol.islower():
-            symbol_index = ord(symbol) - ord("a")
-            new_symbol = chr((symbol_index + (ord(keyword[i]) - ord("a"))) % 26 + ord("a"))
-            ciphertext += new_symbol
-        elif symbol.isdigit():
-            ciphertext += str(symbol)
+            ciphertext += func_dec(symbol, ord(keyword[i]) - ord("a"))
         else:
-            ciphertext += symbol
-
+            ciphertext += str(symbol)
         i += 1
     return ciphertext
 
@@ -28,16 +22,11 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
         if len(keyword) < i + 1:
             i = 0
         if symbol.isupper():
-            symbol_index = ord(symbol) - ord("A")
-            new_symbol = chr((symbol_index - (ord(keyword[i]) - ord("A"))) % 26 + ord("A"))
-            plaintext += new_symbol
+           plaintext+=func1(symbol,ord(keyword[i]) - ord("A"))
         elif symbol.islower():
-            symbol_index = ord(symbol) - ord("a")
-            new_symbol = chr((symbol_index - (ord(keyword[i]) - ord("a"))) % 26 + ord("a"))
-            plaintext += new_symbol
-        elif symbol.isdigit():
-            plaintext += str(symbol)
+            plaintext+=func1(symbol,ord(keyword[i]) - ord("a"))
         else:
-            plaintext += symbol
+            plaintext += str(symbol)
         i += 1
     return plaintext
+#print(encrypt_vigenere("ATTACKATDAWN", "LEMON"))
