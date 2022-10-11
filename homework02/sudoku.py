@@ -10,7 +10,7 @@ def read_sudoku(path: tp.Union[str, pathlib.Path]) -> tp.List[tp.List[str]]:
     return create_grid(puzzle)
 
 
-f = []
+f: tp.List[tp.List[str]] = []
 sudoku_for_gen = [
     ["5", "3", "4", "6", "7", "8", "9", "1", "2"],
     ["6", "7", "2", "1", "9", "5", "3", "4", "8"],
@@ -44,7 +44,7 @@ def display(grid: tp.List[tp.List[str]]) -> None:
     print()
 
 
-def group(values: tp.List[tp.TypeVar("T")], n: int) -> tp.List[tp.List[tp.TypeVar("T")]]:
+def group(values, n: int):
     a = []
     b = []
     r = 0
@@ -82,7 +82,7 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     return c
 
 
-def find_empty_positions(grid: tp.List[tp.List[str]]) -> tuple[int, int]:
+def find_empty_positions(grid: tp.List[tp.List[str]]):
     for i in range(0, len(grid)):
         for j in range(0, len(grid[0])):
             if grid[i][j] == ".":
@@ -143,7 +143,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
-    r = []
+    r: tp.List[str] = []
     q = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     for i in range(0, len(solution)):
         for j in range(0, len(q)):
@@ -166,9 +166,9 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
 
 
 # b b a b b c a c a
-def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
+def generate_sudoku(N: int):
     s = []
-    r = []
+    r: tp.List[str] = []
     for i in range(9):
         r.clear()
         for j in range(9):
