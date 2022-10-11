@@ -8,6 +8,8 @@ def read_sudoku(path: tp.Union[str, pathlib.Path]) -> tp.List[tp.List[str]]:
     with path.open() as f:
         puzzle = f.read()
     return create_grid(puzzle)
+
+
 f = []
 sudoku_for_gen = [
     ["5", "3", "4", "6", "7", "8", "9", "1", "2"],
@@ -20,6 +22,7 @@ sudoku_for_gen = [
     ["2", "8", "7", "4", "1", "9", "6", "3", "5"],
     ["3", "4", "5", "2", "8", "6", "1", "7", "9"],
 ]
+
 
 def create_grid(puzzle: str) -> tp.List[tp.List[str]]:
     digits = [c for c in puzzle if c in "123456789."]
@@ -39,6 +42,7 @@ def display(grid: tp.List[tp.List[str]]) -> None:
         if str(row) in "25":
             print(line)
     print()
+
 
 def group(values: tp.List[tp.TypeVar("T")], n: int) -> tp.List[tp.List[tp.TypeVar("T")]]:
     a = []
@@ -86,7 +90,6 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tuple[int, int]:
     return "no"
 
 
-
 def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
     q = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
     block = get_block(grid, pos)
@@ -103,6 +106,8 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
         if column[i] in q:
             q.remove(column[i])
     return q
+
+
 def var(grid: tp.List[tp.List[str]]):
     f.clear()
     for i in range(0, len(grid)):
@@ -110,6 +115,8 @@ def var(grid: tp.List[tp.List[str]]):
         for j in range(0, len(grid[0])):
             t.append(grid[i][j])
         f.append(t)
+
+
 def solver(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]):
     global f
     position = find_empty_positions(grid)
@@ -128,10 +135,12 @@ def solver(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]):
         solver(grid, (position[0], position[1]))
         grid[int(position[0])][int(position[1])] = "."
 
+
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     solver(grid, (find_empty_positions(grid)[0], find_empty_positions(grid)[1]))
     a = f
     return a
+
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     r = []
@@ -154,6 +163,8 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     # block = get_block(grid,)
 
     return True
+
+
 # b b a b b c a c a
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     s = []
@@ -182,7 +193,6 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
                 sol[a][b] = "."
                 N -= 1
     return sol
-
 
 
 if __name__ == "__main__":
