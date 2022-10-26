@@ -1,9 +1,8 @@
 import random
 import typing as tp
-
 import pygame
 from pygame.locals import *
-import random
+
 Cell = tp.Tuple[int, int]
 Cells = tp.List[int]
 Grid = tp.List[Cells]
