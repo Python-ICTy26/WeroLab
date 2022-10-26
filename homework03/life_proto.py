@@ -16,6 +16,14 @@ class GameOfLife:
         self.width = width
         self.height = height
         self.cell_size = cell_size
+        self.grid = [
+            [1, 1, 0, 0, 1, 1, 1, 1],
+            [0, 1, 1, 1, 1, 1, 1, 0],
+            [1, 0, 1, 1, 0, 0, 0, 0],
+            [1, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 1, 1, 1, 0, 0],
+            [1, 1, 1, 1, 0, 1, 1, 1],
+        ]
 
         # Устанавливаем размер окна
         self.screen_size = width, height
@@ -36,7 +44,7 @@ class GameOfLife:
         for y in range(0, self.height, self.cell_size):
             pygame.draw.line(self.screen, pygame.Color("black"), (0, y), (self.width, y))
 
-    def run(self) -> None:
+    def run(self, QUIT=None) -> None:
         """Запустить игру"""
         pygame.init()
         clock = pygame.time.Clock()

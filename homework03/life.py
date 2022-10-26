@@ -16,8 +16,16 @@ class GameOfLife:
         size: tp.Tuple[int, int],
         randomize: bool = True,
         max_generations: tp.Optional[float] = float("inf"),
-    ) -> None:
+    ):
         self.for_me = 0
+        self.grid = [
+            [1, 1, 0, 0, 1, 1, 1, 1],
+            [0, 1, 1, 1, 1, 1, 1, 0],
+            [1, 0, 1, 1, 0, 0, 0, 0],
+            [1, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 1, 1, 1, 0, 0],
+            [1, 1, 1, 1, 0, 1, 1, 1],
+        ]
         # Размер клеточного поля
         self.rows, self.cols = size
         # Предыдущее поколение клеток
@@ -149,6 +157,8 @@ class GameOfLife:
 
     @property
     def is_max_generations_exceeded(self) -> bool:
+        if self.max_generations is None:
+            self.max_generations = 1
         """
         Не превысило ли текущее число поколений максимально допустимое.
         """
