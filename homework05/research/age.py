@@ -16,6 +16,10 @@ def age_predict(user_id: int) -> tp.Optional[float]:
     amount_of_friends = 0
     mutual_age = 0
     for d in date_list:
+        try:
+            date_of_birth = dt.datetime.strptime(d.replace(".", ""), r"%d%m%Y").date()
+        except (ValueError, AttributeError):
+            continue
         birth = dt.datetime.strptime(d.replace(".", ""), r"%d%m%Y").date()
         amount_of_friends += 1
         age = (dt.datetime.now().date() - birth).days // 365
