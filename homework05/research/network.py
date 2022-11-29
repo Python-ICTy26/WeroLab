@@ -1,24 +1,26 @@
 import typing as tp
 from collections import defaultdict
 
-import community as community_louvain
-import matplotlib.pyplot as plt
-import networkx as nx
-import pandas as pd
-
+import community as community_louvain  # type: ignore
+import matplotlib.pyplot as plt  # type: ignore
+import networkx as nx  # type: ignore
+import pandas as pd  # type: ignore
 from vkapi.friends import get_friends, get_mutual
 
 
 def ego_network(
     user_id: tp.Optional[int] = None, friends: tp.Optional[tp.List[int]] = None
 ) -> tp.List[tp.Tuple[int, int]]:
-    """
-    Построить эгоцентричный граф друзей.
+    graph = []
+    mutual = get_mutual(target_uids=friends)
+    for i in mutual:
+        assert isinstance(i, dict)
+        node = i["id"]
+        a = i["common_friends"]
+        for ids in a:
+            graph.append((node, ids))
 
-    :param user_id: Идентификатор пользователя, для которого строится граф друзей.
-    :param friends: Идентификаторы друзей, между которыми устанавливаются связи.
-    """
-    pass
+    return graph
 
 
 def plot_ego_network(net: tp.List[tp.Tuple[int, int]]) -> None:
@@ -63,6 +65,8 @@ def describe_communities(
         for uid in cluster_users:
             for friend in friends:
                 if uid == friend["id"]:
-                    data.append([cluster_n] + [friend.get(field) for field in fields])  # type: ignore
+                    data.append(
+                        [cluster_n] + [friend.get(field) for field in fields]
+                    )  # type: ignore
                     break
     return pd.DataFrame(data=data, columns=["cluster"] + fields)
