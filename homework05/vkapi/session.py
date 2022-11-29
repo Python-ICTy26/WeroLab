@@ -32,13 +32,13 @@ class Session:
         self._base_url = base_url
 
     def get(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
-        url = str(self._base_url)+"/"+str(url)
+        url = str(self._base_url) + "/" + str(url)
         response = self._request_session.get(url=url, params=kwargs, timeout=self._timeout)
 
         return response
 
     def post(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
-        url = str(self._base_url)+"/"+str(url)
+        url = str(self._base_url) + "/" + str(url)
         response = self._request_session.post(url=url, data=kwargs, timeout=self._timeout)
 
         return response

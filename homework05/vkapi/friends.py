@@ -34,7 +34,6 @@ def get_friends(
     return FriendsResponse(**response_data)
 
 
-
 class MutualFriends(tp.TypedDict):
     id: int
     common_friends: tp.List[int]
@@ -81,5 +80,5 @@ def get_mutual(
             time.sleep(1 - requests_time)
             start = time.time()
             count = 0
-    friends= [MutualFriends(**item) for item in mutual_list]
+    friends = [MutualFriends(**item) for item in mutual_list]
     return friends
