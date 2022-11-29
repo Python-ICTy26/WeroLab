@@ -12,11 +12,13 @@ def ego_network(
     user_id: tp.Optional[int] = None, friends: tp.Optional[tp.List[int]] = None
 ) -> tp.List[tp.Tuple[int, int]]:
     graph = []
-    mutual_list = get_mutual(target_uids=friends)
-    for item in mutual_list:
-        node = item["id"]
-        for friend_id in item["common_friends"]:
-            graph.append((node, friend_id))
+    mutual = get_mutual(target_uids=friends)
+    for i in mutual:
+        assert isinstance(i, dict)
+        node = i["id"]
+        a = i["common_friends"]
+        for ids in a:
+            graph.append((node, ids))
 
     return graph
 

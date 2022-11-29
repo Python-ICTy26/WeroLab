@@ -58,27 +58,34 @@ def get_mutual(
         "offset": offset,
         "progress": progress,
     }
-    limit = VK_CONFIG["target_limit"]
-    number = len(count) / limit
-    count = math.ceil(number)
 
-    mutual_list = []
-    count = 0
-    start = 0
+    count = 1
+    limit = VK_CONFIG["target_limit"]
+    assert isinstance(limit, int)
+    if target_uids is not None:
+        count = math.ceil(len(target_uids) / limit)
+
+    list = []
+    send_count = 0
+    start = 0.0
     time.time()
     for i in range(count):
         response = session.get("friends.getMutual", **query_params)
+        query_params["offset"] += VK_CONFIG["target_limit"]
+        send_count += 1
         if response.status_code == 200:
-            response_data = response.json()["response"]
-            mutual_list.extend(response_data)
-        parm = query_params["offset"]
-        parm += VK_CONFIG["target_limit"]
-        count += 1
-
-        requests_time = time.time() - start
-        if requests_time < 1 and count >= 3:
-            time.sleep(1 - requests_time)
+            data = response.json()["response"]
+            list.extend(data)
+        request_time = time.time() - start
+        if request_time < 1 and send_count >= 3:
+            time.sleep(1 - request_time)
             start = time.time()
-            count = 0
-    friends = [MutualFriends(**item) for item in mutual_list]
+            send_count = 0
+    try:
+        friends = []
+        for i in list:
+            friends.append(i)
+    except TypeError:
+        return list
+
     return friends
