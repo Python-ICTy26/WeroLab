@@ -4,6 +4,7 @@ import typing as tp
 
 from vkapi.friends import get_friends
 
+
 def age_predict(user_id: int) -> tp.Optional[float]:
     frields_list = get_friends(
         user_id,
