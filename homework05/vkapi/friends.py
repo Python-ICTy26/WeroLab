@@ -81,7 +81,7 @@ def get_mutual(
             time.sleep(1 - request_time)
             start = time.time()
             send_count = 0
-        time.sleep(0.2)
+        time.sleep(0.3)
     try:
         friends = []
         for i in list:
